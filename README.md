@@ -118,11 +118,11 @@ These functions can be broadly categorized in the following three groups based o
 
 ####I. GLOBAL WIDGET PROPERTIES
 
-*`widgetName` represents the name of widget which is mentioned while adding widget on the "Add Widget" (`https://<your_domain>.agilecrm.com/#add-widget`) page.
+*`widgetName` represents the name of widget which is mentioned while adding widget on the ***Add Widget*** (`https://<your_domain>.agilecrm.com/#add-widget`) page.
 
 **a) agile_crm_get_widget(widgetName)**   
 
-   This fetches the widget object with the name of `widgetName` in the form of json object. Json object contains the name, description, url, logo url, script attached to the widget and all other details related to the widget.
+   This fetches the widget object with the name of `widgetName` in the form of json object. JSON object contains the name, description, url, logo url, script attached to the widget and all other details related to the widget.
 
       Syntax:
             agile_crm_get_widget(widgetName)
@@ -158,7 +158,7 @@ These functions can be broadly categorized in the following three groups based o
 
 **d) agile_crm_delete_widget_prefs(widgetName)**   
 
-   This function is used to delete the complete preference of the widget.
+   This function is used to delete the complete preference of the widget and resets it to original setting.
 
       Syntax:
             agile_crm_delete_widget_prefs(widgetName)
@@ -186,7 +186,7 @@ These functions can be broadly categorized in the following three groups based o
 
 **b) agile_crm_get_widget_property_from_contact(propertyName)**   
 
-   Call to this function fetches the value associated to propertyName, if present, otherwise `undefined`.
+   Call to this function fetches the value associated to `propertyName`, if present, otherwise `undefined`.
 
       Syntax:
             agile_crm_get_widget_property_from_contact(propertyName)
@@ -244,7 +244,7 @@ These functions can be broadly categorized in the following three groups based o
 
 **d) agile_crm_get_contact_property_by_subtype(propertyName, subtype)**   
 
-   This will return the current contact property with key 'propertyName' and possess a subtype of `subtype`. If there's no result, then it will return `undefined` object.
+   This will return the current contact property with key `propertyName` and possess a subtype of `subtype`. If there's no result, then it will return `undefined` object.
 
         Syntax:
               agile_crm_get_contact_property_by_subtype(propertyName, subtype)
