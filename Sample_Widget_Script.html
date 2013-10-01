@@ -1,0 +1,149 @@
+<html>
+  <body>
+    <center>
+      <div id="ContactDesciptionDiv" style="display:block;">
+        <img id = "contactImg" alt = "loading..." height=150 width=150/>
+            <h2 id="contactName" style="margin:0; font-weight:bold"></h2>
+            <h3 id="jobDescription" style="margin:0; font-style:italic"> </h3>
+            <p  id="extraDetails"></p>
+            <p id="tags"> </p>
+      </div>
+        <input type="submit" id="showHideButton" name="ShowHide" value="Show/Hide" onclick="showHideFlip()">
+    </center>
+  </body>
+
+  <script type="text/javascript">
+
+    var widgetName = "Contact Description";
+    var contactDetails;
+    var widgetPrefs;
+    var isShowing;
+    var showHideButton = document.getElementById("showHideButton");
+    var div = document.getElementById("ContactDesciptionDiv");
+
+    // Fetches the global widget preference.
+    function getWidgetPrefs(callback) {
+      //--------------------------------Global Widget Property----------------------------------
+      widgetPrefs = agile_crm_get_widget_prefs(widgetName);                                   //
+      if(typeof(widgetPrefs) !="undefined")                                                   // 
+        widgetPrefs = JSON.parse(widgetPrefs);                                                //
+                                                                                              //
+      if(typeof(widgetPrefs) == "undefined" || typeof(widgetPrefs["isShow"]) == "undefined")  //
+        isShowing = "true";                                                                   //
+      else                                                                                    //
+        isShowing = widgetPrefs["isShow"];                                                    //
+      //----------------------------------------------------------------------------------------
+        
+      if(typeof(callback) == "function") 
+        callback(showContactDetails);   // invoke getContactDetails(showContactDetails);
+    }
+
+    // Fetches contact details from AgileCRM.
+    function getContactDetails(callback) {
+      contactDetails = new Object();
+
+      // Fetching individual property of contact.
+      contactDetails.firstName = agile_crm_get_contact_property("first_name");
+      contactDetails.lastName = agile_crm_get_contact_property("last_name");
+      contactDetails.title = agile_crm_get_contact_property("title");
+      contactDetails.image = agile_crm_get_contact_property("image");
+
+      // Getting whole contact object.
+      var contact = agile_crm_get_contact();
+      contactDetails.lead_score = contact["lead_score"];
+      contactDetails.star_value = contact["star_value"];
+      contactDetails.tags = contact["tags"];
+
+      for(var key in contactDetails) {
+        if(typeof (contactDetails[key]) == "undefined") {
+          contactDetails[key] = "";
+        }
+      }
+
+      if(typeof(contactDetails["image"])=="undefined"||contactDetails["image"]==null||contactDetails["image"]=="")
+        contactDetails["image"] = "https://i0.wp.com/da4o37ei6ybbh.cloudfront.net/css/images/pic.png";
+      if(typeof(callback) == "function")
+        callback();   // invoke showContactDetails();
+    }
+
+    // Adding data to html container.
+    function showContactDetails() {
+      showHideButton = document.getElementById("showHideButton");
+      div = document.getElementById("ContactDesciptionDiv");
+
+      var img = document.getElementById("contactImg"); 
+      img.src = contactDetails.image;
+      img.alt = "no_image";
+      img.align = "center";
+
+      var contactNameContainer = document.getElementById("contactName");
+      var contactName = contactDetails.firstName + " " + contactDetails.lastName;
+      contactNameContainer.innerHTML= contactName;
+
+      var jobContainer = document.getElementById("jobDescription");
+      jobContainer.innerHTML = contactDetails.title;
+
+      var extraDetailsContainer = document.getElementById("extraDetails");
+      var data = contactName + " is our <b>" + contactDetails.star_value + " star</b> customer.";
+
+      if(contactDetails.lead_score >= 80)
+        data += " He is <b>actively involved</b> in our business. DON'T LET HIM GO.";
+      else if(contactDetails.lead_score >= 60)
+        data += " He has <b>shown interest</b> in our business. He can be our potential customer. GO GRAB HIM.";
+      else if(contactDetails.lead_score >= 40)
+        data += " There is a <b>mild chance</b> of business with him. You can spend your energy on other.";
+      else if(contactDetails.lead_score >= 20)
+        data += " There is <b>very little chance</b> of business with him. You can spend your energy on other.";
+      else 
+        data += " You <b> still have to explore business opportunities</b> with this person.";
+
+      extraDetailsContainer.innerHTML = data;
+
+      if(contactDetails.tags.length > 0) {
+        var tags = document.getElementById("tags");
+        data = "He is tagged with <b>";
+        for(var i = 0; i < contactDetails.tags.length; i++) {
+          if(i > 0)
+            data += ", ";
+          data += contactDetails.tags[i];
+        }
+        data += "</b>.";
+        tags.innerHTML = data;
+      }
+      if(isShowing == "true") {
+        showHideButton.value = "Hide";
+        div.style.display="block";
+      }
+      else {
+        showHideButton.value = "Show";
+        div.style.display="none";
+      }
+    }
+
+    function showHideFlip() {
+      if(isShowing == "true") {
+        isShowing = "false";
+        showHideButton.value = "Show";
+        div.style.display="none";
+      }
+      else {
+        isShowing = "true";
+        showHideButton.value = "Hide";
+        div.style.display="block";
+      }
+
+      //----------------------Global Widget Property----------------------------
+      if(typeof (widgetPrefs) == "undefined")                                 //
+        widgetPrefs = new Object();                                           //
+                                                                              //
+      widgetPrefs.isShow = isShowing;                                         //
+      agile_crm_save_widget_prefs(widgetName, JSON.stringify(widgetPrefs));   //
+      //----------------------Global Widget Property----------------------------
+    }
+
+    // callbacks: getWidgetPrefs -> getContactDetails -> showContactDetails
+    getWidgetPrefs(getContactDetails);
+
+  </script>
+
+</html>
