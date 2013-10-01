@@ -8,16 +8,16 @@ This API allows you to develop widgets for Agile CRM.
 
 Widgets are small application which can be built by end users and embedded in the contact’s page in Agile CRM. It is a HTML/JavaScript segment which is executed whenever a contact page is loaded. Every contact page has some html segment allocated for the widget.
 
-Custom tab, located at `https://<your_domain>.agilecrm.com/#add-widget/` provides option to add widget. There are two methods to upload a widget.
-
 These widgets have access to contact details and/or external resources in order to return some meaningful collection of data. These widgets add extra functionality to the AgileCRM contacts page.
+
+*Custom* tab, located at `https://<your_domain>.agilecrm.com/#add-widget/` provides option to add widget. There are two methods to upload a widget.
 
 ####1. HTML/Script   
 HTML/JavaScript segment are simply embedded in the contact page html. It is executed at the AgileCRM server whenever a contact page loads. It can access external resource in the form of jsonp object.    
 ***Access:*** Global widget property, widget property wrt to contact and contact details.
 
 ####2. URL   
-In this method contact details are sent to the server, mentioned in the URL field, via POST method. Contact details are sent in form of json object. The server process the contact details and returns the HTML fragment which is further embedded to the html segment allocated to the widget at the contact page.   
+In this method contact details are sent to the server, mentioned in the URL field, via POST method. Contact details are sent in form of json object. The server process this contact details and returns the HTML body which is further embedded to the html segment allocated to the widget at the contact page.   
 ***Access:*** Global widget property, widget property wrt to contact and contact details.
 
 Contact data will be posted in the form of JSON as 
@@ -88,7 +88,7 @@ Contact data will be posted in the form of JSON as
 
 HTML/SCRIPT
 ---
-This section contain the description of javascript functions which end user can use while writing the widgets using "HTML" option.
+This section contain the description of javascript functions which end user can use while writing the widgets using *HTML* option.
 
 These functions can be broadly categorized in the following three groups based on their domain.
 
@@ -118,11 +118,11 @@ These functions can be broadly categorized in the following three groups based o
 
 ####I. GLOBAL WIDGET PROPERTIES
 
-*widgetName represents the name of widget which is mentioned while adding widget on the "Add Widget" (`https://<your_domain>.agilecrm.com/#add-widget`) page.
+*`widgetName` represents the name of widget which is mentioned while adding widget on the "Add Widget" (`https://<your_domain>.agilecrm.com/#add-widget`) page.
 
 **a) agile_crm_get_widget(widgetName)**   
 
-   This fetches the widget object with the name of "widgetName" in the form of json object. Json object contains the name, description, url, logo url, script attached to the widget and all other details related to the widget.
+   This fetches the widget object with the name of `widgetName` in the form of json object. Json object contains the name, description, url, logo url, script attached to the widget and all other details related to the widget.
 
       Syntax:
             agile_crm_get_widget(widgetName)
@@ -133,7 +133,8 @@ These functions can be broadly categorized in the following three groups based o
 
 **b) agile_crm_save_widget_prefs(widgetName, pref)**   
 
-   This function can be used to save global widget preference. "pref" should be a stringified json object. In case, if the preference already exists it will overwrite it.
+   This function can be used to save global widget preference. `pref` should be a stringified json object. In case, if the preference already exists it will overwrite it.
+   
       Syntax:
             agile_crm_save_widget_prefs(widgetName, pref)
               where,
@@ -146,7 +147,7 @@ These functions can be broadly categorized in the following three groups based o
 
 **c) agile_crm_get_widget_prefs(widgetName)**   
 
-   This function is used to get the global widget preference. If there's some preference present then it returns its stringified json representation otherwise "undefined" object.
+   This function is used to get the global widget preference. If there's some preference present then it returns its stringified json representation otherwise `undefined` object.
 
       Syntax: 
             agile_crm_get_widget_prefs(widgetName)
@@ -185,13 +186,12 @@ These functions can be broadly categorized in the following three groups based o
 
 **b) agile_crm_get_widget_property_from_contact(propertyName)**   
 
-   Call to this function fetches the value associated to propertyName, if present, otherwise "undefined".
+   Call to this function fetches the value associated to propertyName, if present, otherwise `undefined`.
 
       Syntax:
             agile_crm_get_widget_property_from_contact(propertyName)
               where,
                 propertyName = Name of property which is to be accessed.
-
 
       Eg.   var propertyName = "custom_widget_id";
             var propertyValue = agile_crm_get_widget_property_from_contact(propertyName);
@@ -220,7 +220,7 @@ These functions can be broadly categorized in the following three groups based o
 
 **b) agile_crm_get_contact_property(propertyName)**   
 
-   This function returns the property associated with propertyName, if it exists, otherwise returns "undefined".
+   This function returns the property associated with `propertyName`, if it exists, otherwise returns `undefined`.
 
         Syntax:
               agile_crm_get_contact_property(propertyName)
@@ -232,7 +232,7 @@ These functions can be broadly categorized in the following three groups based o
 
 **c) agile_crm_get_contact_properties_list(propertyName)**   
 
-   This function fetches all the value associated to 'propertyName' in a array. If there's no such property existed, it will return an empty array.
+   This function fetches all the value associated to `propertyName` in a array. If there's no such property existed, it will return an empty array.
 
         Syntax:
               agile_crm_get_contact_properties_list(propertyName)
@@ -244,7 +244,7 @@ These functions can be broadly categorized in the following three groups based o
 
 **d) agile_crm_get_contact_property_by_subtype(propertyName, subtype)**   
 
-   This will return the current contact property with key 'propertyName' and possess a subtype of 'subtype'. If there's no result, then it will return "undefined" object.
+   This will return the current contact property with key 'propertyName' and possess a subtype of `subtype`. If there's no result, then it will return `undefined` object.
 
         Syntax:
               agile_crm_get_contact_property_by_subtype(propertyName, subtype)
@@ -266,7 +266,7 @@ These functions can be broadly categorized in the following three groups based o
                   propertyName = Name of property which is to be accessed.
                   subtype = Subtype of the property
                   value = value to be stored
-                  type = SYSTEM (for the system defined property) or CUSTOM (for new property)
+                  type = "SYSTEM" (for the system defined property) or "CUSTOM" (for new property)
 
         Eg.   var propertyName = "email";
               var subtype = "work";
@@ -276,7 +276,7 @@ These functions can be broadly categorized in the following three groups based o
 
 **f) agile_crm_update_contact(propertyName, value)**   
 
-   This function can also be used to update current contact property and assigns it the value 'value'.
+   This function can also be used to update current contact property and assigns it the value `value`.
 
         Syntax:
               agile_crm_update_contact(propertyName, value)
