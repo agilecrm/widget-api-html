@@ -1,8 +1,8 @@
 ﻿AGILE CRM WIDGETS
-====
+=================
 
 INTRODUCTION
----
+------------
 
 This API allows you to develop widgets for Agile CRM.   
 
