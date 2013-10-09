@@ -23,16 +23,22 @@
 
     // Fetches the global widget preference.
     function getWidgetPrefs(callback) {
-      //--------------------------------Global Widget Property----------------------------------
-      widgetPrefs = agile_crm_get_widget_prefs(widgetName);                                   //
-      if(typeof(widgetPrefs) !="undefined")                                                   // 
-        widgetPrefs = JSON.parse(widgetPrefs);                                                //
-                                                                                              //
-      if(typeof(widgetPrefs) == "undefined" || typeof(widgetPrefs["isShow"]) == "undefined")  //
-        isShowing = "true";                                                                   //
-      else                                                                                    //
-        isShowing = widgetPrefs["isShow"];                                                    //
-      //----------------------------------------------------------------------------------------
+
+      /*
+        agile_crm_get_widget_prefs:
+            This function is used to get the global widget preference.
+            If there's some preference present then it returns its 
+            stringified json representation otherwise undefined object. 
+      */
+      widgetPrefs = agile_crm_get_widget_prefs(widgetName);                                   
+
+      if(typeof(widgetPrefs) !="undefined")                                                    
+        widgetPrefs = JSON.parse(widgetPrefs);                                                
+                                                                                              
+      if(typeof(widgetPrefs) == "undefined" || typeof(widgetPrefs["isShow"]) == "undefined")  
+        isShowing = "true";                                                                   
+      else                                                                                    
+        isShowing = widgetPrefs["isShow"];                                                    
         
       if(typeof(callback) == "function") 
         callback(showContactDetails);   // invoke getContactDetails(showContactDetails);
@@ -42,13 +48,22 @@
     function getContactDetails(callback) {
       contactDetails = new Object();
 
-      // Fetching individual property of contact.
+      /*
+         agile_crm_get_contact_property:
+            This function returns the property associated with propertyName,
+            if it exists, otherwise returns undefined.
+      */
       contactDetails.firstName = agile_crm_get_contact_property("first_name");
       contactDetails.lastName = agile_crm_get_contact_property("last_name");
       contactDetails.title = agile_crm_get_contact_property("title");
       contactDetails.image = agile_crm_get_contact_property("image");
 
-      // Getting whole contact object.
+      /*
+         agile_crm_get_contact:
+            This function returns the object in the form of json object.
+            More details about the structure of contact object is
+            provided in documentation.
+      */
       var contact = agile_crm_get_contact();
       contactDetails.lead_score = contact["lead_score"];
       contactDetails.star_value = contact["star_value"];
@@ -132,13 +147,18 @@
         div.style.display="block";
       }
 
-      //----------------------Global Widget Property----------------------------
-      if(typeof (widgetPrefs) == "undefined")                                 //
-        widgetPrefs = new Object();                                           //
-                                                                              //
-      widgetPrefs.isShow = isShowing;                                         //
-      agile_crm_save_widget_prefs(widgetName, JSON.stringify(widgetPrefs));   //
-      //----------------------Global Widget Property----------------------------
+      if(typeof (widgetPrefs) == "undefined")
+        widgetPrefs = new Object();
+
+      widgetPrefs.isShow = isShowing;
+
+      /*
+        agile_crm_save_widget_prefs:
+            This function can be used to save global widget preference.
+            'pref' should be a stringified json object. In case, if the
+            preference already exists it will overwrite it.
+      */
+      agile_crm_save_widget_prefs(widgetName, JSON.stringify(widgetPrefs)); 
     }
 
     // callbacks: getWidgetPrefs -> getContactDetails -> showContactDetails
