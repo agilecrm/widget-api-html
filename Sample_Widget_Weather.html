@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"> </script>
+
+<html>
+  <body>
+    <center>
+      <div id="ContactDesciptionDiv" style="display:block;">
+        <img id = "img" alt = "loading..." height=65 width=65/>
+        <h2 id="weatherOverview" style="margin:0; font-weight:bold"></h2>
+        <h3 id="weatherDetails" style="margin:0; font-style:italic"> </h3>
+        <p id="details"></p>
+      </div>
+    </center>
+  </body>
+
+  <script type="text/javascript" charset="utf-8">
+    var contact = agile_crm_get_contact_property("address");
+
+    if(typeof(contact) == "string") {
+      contact = JSON.parse(contact);
+      if(typeof(contact.zip) == "undefined") {
+        fail();
+      }
+      else {
+        $("#details").html("zip: " + contact.zip);
+        step1_getLatLong(contact.zip);
+      }
+    }
+    else {
+      fail();
+    }
+
+    function step1_getLatLong(pincode) {
+      var url='https://maps.googleapis.com/maps/api/geocode/json?address=' + pincode + '&sensor=false'; 
+      $.ajax({
+          url: url,
+          type: 'GET',
+          dataType: 'json',
+          success: success,
+          error: failure,
+      });
+      function success(data) {
+          if(data["status"] == 'OK') {
+            var lat = data.results[0].geometry.location.lat;
+            var lng = data.results[0].geometry.location.lng;
+            ssl_getWeather(lat, lng);
+          }
+          else{
+            console.log("Can't find location for the zip code.")
+          }
+      }
+      function failure() {
+        console.log("Failed to fetch location data from maps.googleapis.com.");
+      }
+    }
+
+    function ssl_getWeather(lat, lng) {
+      var url = "https://api.worldweatheronline.com/free/v1/weather.ashx?q=" + lat + "," + lng + "&format=json&key=4jp2uyrce27sh59nbjjr975s&callback=?";
+      console.log(url);
+
+      $.ajax({
+          url: url,
+          type: 'GET',
+          dataType: 'json',
+          success: success,
+          error: failure,
+      });
+      function success(data) {
+        console.log(data.data.current_condition[0]);
+        var desc = data.data.current_condition[0].weatherDesc[0].value;
+        var iconUrl = data.data.current_condition[0].weatherIconUrl[0].value;
+        var temp = data.data.current_condition[0].temp_C;
+        $("#weatherOverview").html(desc);
+        $("#weatherDetails").html(temp + " C");
+        $("#img").attr("src", iconUrl);
+      }
+      function failure(data) {
+        console.log("FAIL!!!\n" +data);
+      }
+    }
+
+    function fail() {
+      var notFound = "https://upload.wikimedia.org/wikipedia/commons/2/25/Icon-round-Question_mark.jpg";
+      $("#img").attr("src", notFound);
+      $("#details").html("No zip code found");
+    }
+
+  </script>
+</html>
