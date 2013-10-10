@@ -194,10 +194,9 @@
     }
 
     function fail() {
-      div.style.display="block";
       var notFound = "https://upload.wikimedia.org/wikipedia/commons/2/25/Icon-round-Question_mark.jpg";
       $("#weatherImg").attr("src", notFound);
-      $("#details").html("No zip code found");
+      $("#weatherDetails").html("No zip code found");
       $('#weatherButtonBlock').css('display','none');
     }
 
