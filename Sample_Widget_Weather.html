@@ -40,7 +40,7 @@
   </body>
 
   <script type="text/javascript" charset="utf-8">
-    var widgetName = "Weather";
+    var widgetName = "Weather Widget";
     var widgetPrefs;
     var isShowing;
 
@@ -65,6 +65,7 @@
       fail();
     }
 
+    // This method fetches the latitude/longitude from the pincode and then passess it to 'step2_getWeather'.
     function step1_getLatLong(pincode) {
       var url='https://maps.googleapis.com/maps/api/geocode/json?address=' + pincode + '&sensor=false'; 
       $.ajax({
@@ -89,6 +90,7 @@
       }
     }
 
+    // This function fetches weather details from the latitude/longitude and adds these to html page.
     function step2_getWeather(lat, lng) {
       var url = "https://api.worldweatheronline.com/free/v1/weather.ashx?q=" + lat + "," + lng 
                   + "&format=json&key=4jp2uyrce27sh59nbjjr975s&callback=?";
@@ -135,7 +137,7 @@
       }
     }
 
-    // Fetches the global widget preference.
+    // This method fetches the global widget preference and decides weather to show extra details or not.
     function step3_getWidgetPrefs() {
 
       /*
@@ -164,6 +166,7 @@
       }
     }
 
+    // This method flip the value of "isShowing" and saves it to the global widget preference.
     function showHideFlip() {
       if(isShowing == "true") {
         isShowing = "false";
