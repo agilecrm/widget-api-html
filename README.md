@@ -12,65 +12,6 @@ These widgets have access to contact details and/or external resources in order 
 HTML/JavaScript segment are simply embedded in the contact page html. It is executed at the AgileCRM server whenever a contact page loads. It can access external resource in the form of jsonp object.    
 ***Access:*** Global widget property, widget property wrt to contact and contact details.
 
-
-Contact data will be posted in the form of JSON as 
-
-        {
-            "id": 1435,`
-            "type": "PERSON",
-            "created_time": 1375424495,
-            "updated_time": 1380003638,
-            "viewed": {
-                "viewed_time": 1380003638330,
-                "viewer_id": 1
-            },
-            "star_value": 0,
-            "lead_score": 0,
-            "tags": [
-                "lead"
-            ],
-            "tagsWithTime": [
-                {
-                    "tag": "lead",
-                    "createdTime": 1378131285793,
-                    "entity_type": "tag"
-                }
-            ],
-            "properties": [
-                {
-                    "type": "SYSTEM",
-                    "name": "last_name",
-                    "subtype": null,
-                    "value": "test"
-                },
-                {
-                    "type": "SYSTEM",
-                    "name": "title",
-                    "subtype": null,
-                    "value": "Software Developer at Agile CRM"
-                },
-                {
-                    "type": "SYSTEM",
-                    "name": "email",
-                    "subtype": "",
-                    "value": "test@agilecrm.com"
-                },
-                {
-                    "type": "CUSTOM",
-                    "name": "image",
-                    "subtype": null,
-                    "value": "https://www.agilecrm.com/img/agile-crm.png"
-                }
-            ],
-            "widget_properties": null,
-            "owner": {
-                "id": 1450,
-                "email": "tejaswi@agilecrm.com",
-                "is_admin": false
-            }
-        }
-
-
 ####Notes:   
 1. AgileCRM support HTML5 specifications. Please write widget which is compatible with HTML5.  
  
@@ -312,3 +253,63 @@ These functions can be broadly categorized in the following three groups based o
               var subtype = "work";
                 var value = "foo@bar.com";
                 agile_crm_delete_contact_property_by_subtype(propertyName, subtype, value);
+
+
+
+Contact Structure
+---
+        {
+            "id": 1435,`
+            "type": "PERSON",
+            "created_time": 1375424495,
+            "updated_time": 1380003638,
+            "viewed": {
+                "viewed_time": 1380003638330,
+                "viewer_id": 1
+            },
+            "star_value": 0,
+            "lead_score": 0,
+            "tags": [
+                "lead"
+            ],
+            "tagsWithTime": [
+                {
+                    "tag": "lead",
+                    "createdTime": 1378131285793,
+                    "entity_type": "tag"
+                }
+            ],
+            "properties": [
+                {
+                    "type": "SYSTEM",
+                    "name": "last_name",
+                    "subtype": null,
+                    "value": "test"
+                },
+                {
+                    "type": "SYSTEM",
+                    "name": "title",
+                    "subtype": null,
+                    "value": "Software Developer at Agile CRM"
+                },
+                {
+                    "type": "SYSTEM",
+                    "name": "email",
+                    "subtype": "",
+                    "value": "test@agilecrm.com"
+                },
+                {
+                    "type": "CUSTOM",
+                    "name": "image",
+                    "subtype": null,
+                    "value": "https://www.agilecrm.com/img/agile-crm.png"
+                }
+            ],
+            "widget_properties": null,
+            "owner": {
+                "id": 1450,
+                "email": "tejaswi@agilecrm.com",
+                "is_admin": false
+            }
+        }
+
