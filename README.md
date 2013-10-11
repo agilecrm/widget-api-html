@@ -7,7 +7,7 @@ Widgets are small application which can be built by end users and embedded in th
 
 These widgets have access to contact details and/or external resources in order to return some meaningful collection of data. These widgets add extra functionality to the AgileCRM contacts page.
 
-*Custom* tab, located at `https://<your_domain>.agilecrm.com/#add-widget/` provides option to add widget. There are two methods to upload a widget. You have to select *HTML* from drop down menu to use methods in this doc.
+*Custom* tab, located at `https://<your_domain>.agilecrm.com/#add-widget/` provides option to add widget. There are two methods to upload a widget. You have to select `HTML` option from drop down menu to use methods in this doc.
 
 HTML/JavaScript segment are simply embedded in the contact page html. It is executed at the AgileCRM server whenever a contact page loads. It can access external resource in the form of jsonp object.    
 ***Access:*** Global widget property, widget property wrt to contact and contact details.
@@ -17,7 +17,8 @@ HTML/JavaScript segment are simply embedded in the contact page html. It is exec
  
 2. jQuery library (version 1.7.2) is already loaded. Feel free to use it. And don't import any other version jquery library in widget as it can result into compatibility issue.   
 
-3. As modern browsers are blocking [mixed content](https://blog.mozilla.org/tanvi/2013/04/10/mixed-content-blocking-enabled-in-firefox-23/), all resources must be accessed using secure (https) connection.
+
+3. As modern browsers are blocking [mixed content](https://blog.mozilla.org/security/2013/05/16/mixed-content-blocking-in-firefox-aurora/), all resources must be accessed using secure (https) connection.
    
 These functions can be broadly categorized in the following three groups based on their domain.
 
@@ -56,7 +57,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This fetches the widget object with the name of `widgetName` in the form of json object. JSON object contains the name, description, url, logo url, script attached to the widget and all other details related to the widget.
 
-      Eg.   var widgetDetails = agile_crm_get_widget(widgetName);
+            var widgetDetails = agile_crm_get_widget(widgetName);
    
 ####**b) agile_crm_save_widget_prefs(widgetName, pref)**   
 **Parameters:**  widgetName, pref   
@@ -64,7 +65,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function can be used to save global widget preference. `pref` should be a stringified json object. In case, if the preference already exists it will overwrite it.
    
-      Eg.   var jPref = {"user_name":"foo", "password":"bar"};
+            var jPref = {"user_name":"foo", "password":"bar"};
             var pref = JSON.stringify(jPref);
             agile_crm_save_widget_prefs(widgetName, pref);
 
@@ -74,7 +75,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function is used to get the global widget preference. If there's some preference present then it returns its stringified json representation otherwise `undefined` object.
 
-      Eg.   var widgetPrefs = agile_crm_get_widget_prefs(widgetName);
+            var widgetPrefs = agile_crm_get_widget_prefs(widgetName);
 
 ####**d) agile_crm_delete_widget_prefs(widgetName)**   
 **Parameters:**  widgetName    
@@ -82,7 +83,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function is used to delete the complete preference of the widget and resets it to original setting.
     
-      Eg.   var prefs = agile_crm_delete_widget_prefs(widgetName)
+            var prefs = agile_crm_delete_widget_prefs(widgetName)
 
 
 ####II. LOCAL WIDGET PROPERTY WRT. CONTACT   
@@ -93,7 +94,7 @@ These functions can be broadly categorized in the following three groups based o
 
    It is used to save the property of a widget with respect to the contact pages on which widget loads. 
 
-      Eg.   var propertyName = "contact_widget_id";
+            var propertyName = "contact_widget_id";
             var propertyValue = "12345";
             agile_crm_save_widget_property_to_contact(propertyName, propertyValue);
 
@@ -103,7 +104,7 @@ These functions can be broadly categorized in the following three groups based o
 
    Call to this function fetches the value associated to `propertyName`, if present, otherwise `undefined`.
 
-      Eg.   var propertyName = "custom_widget_id";
+            var propertyName = "custom_widget_id";
             var propertyValue = agile_crm_get_widget_property_from_contact(propertyName);
 
 ####**c) agile_crm_delete_widget_property_from_contact(propertyName)**   
@@ -112,7 +113,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function can be used to delete the property key value pair from the contact-widget property field.
 
-      Eg.   var propertyName = "custom_widget_id";
+            var propertyName = "custom_widget_id";
             agile_crm_delete_widget_property_from_contact(propertyName);
 
 ####III. CONTACT PROPERTY   
@@ -122,7 +123,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function returns the object in the form of json object. More details about the structure of contact object is provided at the [bottom](#contact-structure) of this page.
 
-        Eg. var jsonData = agile_crm_get_contact();
+            var jsonData = agile_crm_get_contact();
 
 ####**b) agile_crm_get_contact_property(propertyName)**   
 **Parameters:**  propertyName    
@@ -130,7 +131,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function returns the property associated with `propertyName`, if it exists, otherwise returns `undefined`.
 
-        Eg.   var propertyName = "first_name";
+              var propertyName = "first_name";
               var propertyValue = agile_crm_get_contact_property(propertyName);  // returns the first name of contact.
 
 ####**c) agile_crm_get_contact_properties_list(propertyName)**   
@@ -139,7 +140,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function fetches all the value associated to `propertyName` in a array. If there's no such property existed, it will return an empty array.
 
-        Eg.   var propertyName = "email";
+              var propertyName = "email";
               var propertyValue = agile_crm_get_contact_properties_list(propertyName); // returns list of all emails associated to current contact.
 
 ####**d) agile_crm_get_contact_property_by_subtype(propertyName, subtype)**   
@@ -149,7 +150,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This will return the current contact property with key `propertyName` and possess a subtype of `subtype`. If there's no result, then it will return `undefined` object.
 
-        Eg.   var propertyName = "email";
+              var propertyName = "email";
               var subtype = "work";
               var result = agile_crm_get_contact_property_by_subtype(propertyName, subtype);
          
@@ -159,7 +160,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function will save the property with the complete details about it.
 
-        Eg.   var propertyName = "email";
+              var propertyName = "email";
               var subtype = "work";
               var value = "foo@bar.com";
               var type = "SYSTEM";  // because email is system defined property.
@@ -171,7 +172,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function can also be used to update current contact property and assigns it the value `value`.
 
-        Eg.   var propertyName = "email";
+              var propertyName = "email";
               var value = "foo@bar.com";
               agile_crm_update_contact(propertyName, value);
 
@@ -181,7 +182,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function can be used to update multiple properties with single function call.
 
-      Eg.     var pref = [
+              var pref = [
                             {"name": "first_name", "value":"foo"}, 
                             {"name":"last_name", "value": "bar"},
                             {"name": "email", "value":"foo@bar.com", "type":"SYSTEM", "subtype":"home"}
@@ -194,7 +195,7 @@ These functions can be broadly categorized in the following three groups based o
 
    This function can be used to remove the property mentioned by the arguments.
 
-        Eg.   var propertyName = "email";
+              var propertyName = "email";
               var subtype = "work";
               var value = "foo@bar.com";
               agile_crm_delete_contact_property_by_subtype(propertyName, subtype, value);
