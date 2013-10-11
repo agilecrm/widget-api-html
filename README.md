@@ -7,7 +7,7 @@ Widgets are small application which can be built by end users and embedded in th
 
 These widgets have access to contact details and/or external resources in order to return some meaningful collection of data. These widgets add extra functionality to the AgileCRM contacts page.
 
-*Custom* tab, located at `https://<your_domain>.agilecrm.com/#add-widget/` provides option to add widget. There are two methods to upload a widget.
+*Custom* tab, located at `https://<your_domain>.agilecrm.com/#add-widget/` provides option to add widget. There are two methods to upload a widget. You have to select *HTML* from drop down menu to use methods in this doc.
 
 HTML/JavaScript segment are simply embedded in the contact page html. It is executed at the AgileCRM server whenever a contact page loads. It can access external resource in the form of jsonp object.    
 ***Access:*** Global widget property, widget property wrt to contact and contact details.
