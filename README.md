@@ -19,11 +19,6 @@ HTML/JavaScript segment are simply embedded in the contact page html. It is exec
 
 3. As modern browsers are blocking [mixed content](https://blog.mozilla.org/tanvi/2013/04/10/mixed-content-blocking-enabled-in-firefox-23/), all resources must be accessed using secure (https) connection.
    
-
-HTML/SCRIPT
----
-This section contain the description of javascript functions which end user can use while writing the widgets using *HTML* option.
-
 These functions can be broadly categorized in the following three groups based on their domain.
 
 **I. GLOBAL WIDGET PROPERTIES:** These functions have access to global widget properties.
@@ -49,6 +44,8 @@ These functions can be broadly categorized in the following three groups based o
       6. agile_crm_update_contact(propertyName, value)
       7. agile_crm_update_contact_properties(propertiesArray)
       8. agile_crm_delete_contact_property_by_subtype(propertyName, subtype, value)
+
+---
 
 ####I. GLOBAL WIDGET PROPERTIES
 
