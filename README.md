@@ -50,15 +50,15 @@ These functions can be broadly categorized in the following three groups based o
 
 *`widgetName` represents the name of widget which is mentioned while adding widget on the ***Add Widget*** (`https://<your_domain>.agilecrm.com/#add-widget`) page.
 
-**a) agile_crm_get_widget(widgetName)**   
+###**a) agile_crm_get_widget(widgetName)**   
 **Arguments:**  widget name    
 **Response:**  JSON Object   
 
    This fetches the widget object with the name of `widgetName` in the form of json object. JSON object contains the name, description, url, logo url, script attached to the widget and all other details related to the widget.
 
       Eg.   var widgetDetails = agile_crm_get_widget(widgetName);
-
-**b) agile_crm_save_widget_prefs(widgetName, pref)**   
+   
+###**b) agile_crm_save_widget_prefs(widgetName, pref)**   
 **Arguments:**  widget name, preference  (stringified json object)    
 **Response:**  nil   
 
@@ -68,7 +68,7 @@ These functions can be broadly categorized in the following three groups based o
             var pref = JSON.stringify(jPref);
             agile_crm_save_widget_prefs(widgetName, pref);
 
-**c) agile_crm_get_widget_prefs(widgetName)**   
+###**c) agile_crm_get_widget_prefs(widgetName)**   
 **Arguments:**  widget name   
 **Response:** JSON string    
 
@@ -76,7 +76,7 @@ These functions can be broadly categorized in the following three groups based o
 
       Eg.   var widgetPrefs = agile_crm_get_widget_prefs(widgetName);
 
-**d) agile_crm_delete_widget_prefs(widgetName)**   
+###**d) agile_crm_delete_widget_prefs(widgetName)**   
 **Arguments:**  widget name   
 **Response:**  nil    
 
@@ -87,7 +87,7 @@ These functions can be broadly categorized in the following three groups based o
 
 ####II. LOCAL WIDGET PROPERTY WRT. CONTACT   
 
-**a) agile_crm_save_widget_property_to_contact(propertyName, propertyValue)**    
+###**a) agile_crm_save_widget_property_to_contact(propertyName, propertyValue)**    
 **Arguments:**  property name, value    
 **Response:**  nil   
 
@@ -97,7 +97,7 @@ These functions can be broadly categorized in the following three groups based o
             var propertyValue = "12345";
             agile_crm_save_widget_property_to_contact(propertyName, propertyValue);
 
-**b) agile_crm_get_widget_property_from_contact(propertyName)**   
+###**b) agile_crm_get_widget_property_from_contact(propertyName)**   
 **Arguments:**  property name    
 **Response:**  String   
 
@@ -106,7 +106,7 @@ These functions can be broadly categorized in the following three groups based o
       Eg.   var propertyName = "custom_widget_id";
             var propertyValue = agile_crm_get_widget_property_from_contact(propertyName);
 
-**c) agile_crm_delete_widget_property_from_contact(propertyName)**   
+###**c) agile_crm_delete_widget_property_from_contact(propertyName)**   
 **Arguments:**  property name    
 **Response:** nil    
 
@@ -116,7 +116,7 @@ These functions can be broadly categorized in the following three groups based o
             agile_crm_delete_widget_property_from_contact(propertyName);
 
 ####III. CONTACT PROPERTY   
-**a) agile_crm_get_contact()**   
+###**a) agile_crm_get_contact()**   
 **Arguments:**  nil    
 **Response:**  JSON Object   
 
@@ -124,7 +124,7 @@ These functions can be broadly categorized in the following three groups based o
 
         Eg. var jsonData = agile_crm_get_contact();
 
-**b) agile_crm_get_contact_property(propertyName)**   
+###**b) agile_crm_get_contact_property(propertyName)**   
 **Arguments:**  property name    
 **Response:** String   
 
@@ -133,7 +133,7 @@ These functions can be broadly categorized in the following three groups based o
         Eg.   var propertyName = "first_name";
               var propertyValue = agile_crm_get_contact_property(propertyName);  // returns the first name of contact.
 
-**c) agile_crm_get_contact_properties_list(propertyName)**   
+###**c) agile_crm_get_contact_properties_list(propertyName)**   
 **Arguments:**  property name    
 **Response:** Array [JSON Object]    
 
@@ -142,7 +142,7 @@ These functions can be broadly categorized in the following three groups based o
         Eg.   var propertyName = "email";
               var propertyValue = agile_crm_get_contact_properties_list(propertyName); // returns list of all emails associated to current contact.
 
-**d) agile_crm_get_contact_property_by_subtype(propertyName, subtype)**   
+###**d) agile_crm_get_contact_property_by_subtype(propertyName, subtype)**   
 **Arguments:**  property name, property subtype    
 **Response:**  String   
 
@@ -153,7 +153,7 @@ These functions can be broadly categorized in the following three groups based o
               var subtype = "work";
               var result = agile_crm_get_contact_property_by_subtype(propertyName, subtype);
          
-**e) agile_crm_save_contact_property(propertyName, subtype, value, type)**   
+###**e) agile_crm_save_contact_property(propertyName, subtype, value, type)**   
 **Arguments:**  property name, property subtype, property value, property type    
 **Response:**  nil   
 
@@ -165,7 +165,7 @@ These functions can be broadly categorized in the following three groups based o
               var type = "SYSTEM";  // because email is system defined property.
               agile_crm_save_contact_property(propertyName, subtype, value, type);
 
-**f) agile_crm_update_contact(propertyName, value)**   
+###**f) agile_crm_update_contact(propertyName, value)**   
 **Arguments:**  property name, value    
 **Response:**  nil   
 
@@ -175,7 +175,7 @@ These functions can be broadly categorized in the following three groups based o
               var value = "foo@bar.com";
               agile_crm_update_contact(propertyName, value);
 
-**g) agile_crm_update_contact_properties(propertiesArray)**   
+###**g) agile_crm_update_contact_properties(propertiesArray)**   
 **Arguments:**  properties array    
 **Response:**  nil   
 
@@ -188,7 +188,7 @@ These functions can be broadly categorized in the following three groups based o
                          ];
               agile_crm_update_contact_properties(pref);
 
-**h) agile_crm_delete_contact_property_by_subtype(propertyName, subtype, value)**   
+###**h) agile_crm_delete_contact_property_by_subtype(propertyName, subtype, value)**   
 **Arguments:**  property name, property subtype, property value    
 **Response:**  nil   
 
@@ -253,7 +253,7 @@ Contact Structure
             "widget_properties": null,
             "owner": {
                 "id": 1450,
-                "email": "tejaswi@agilecrm.com",
+                "email": "user@agilecrm.com",
                 "is_admin": false
             }
         }
