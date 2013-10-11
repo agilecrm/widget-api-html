@@ -1,9 +1,6 @@
 ﻿AGILE CRM WIDGETS
 =================
 
-INTRODUCTION
-------------
-
 This API allows you to develop widgets for Agile CRM.   
 
 Widgets are small application which can be built by end users and embedded in the contact’s page in Agile CRM. It is a HTML/JavaScript segment which is executed whenever a contact page is loaded. Every contact page has some html segment allocated for the widget.
@@ -12,13 +9,9 @@ These widgets have access to contact details and/or external resources in order 
 
 *Custom* tab, located at `https://<your_domain>.agilecrm.com/#add-widget/` provides option to add widget. There are two methods to upload a widget.
 
-####1. HTML/Script   
 HTML/JavaScript segment are simply embedded in the contact page html. It is executed at the AgileCRM server whenever a contact page loads. It can access external resource in the form of jsonp object.    
 ***Access:*** Global widget property, widget property wrt to contact and contact details.
 
-####2. URL   
-In this method contact details are sent to the server, mentioned in the URL field, via POST method. Contact details are sent in form of json object. The server process this contact details and returns the HTML body which is further embedded to the html segment allocated to the widget at the contact page.   
-***Access:*** Global widget property, widget property wrt to contact and contact details.
 
 Contact data will be posted in the form of JSON as 
 
@@ -83,7 +76,7 @@ Contact data will be posted in the form of JSON as
  
 2. jQuery library (version 1.7.2) is already loaded. Feel free to use it. And don't import any other version jquery library in widget as it can result into compatibility issue.   
 
-3. As modern browsers are blocking [mixed content](https://blog.mozilla.org/tanvi/2013/04/10/mixed-content-blocking-enabled-in-firefox-23/), any external resource must be accessed using secure (https) connection.
+3. As modern browsers are blocking [mixed content](https://blog.mozilla.org/tanvi/2013/04/10/mixed-content-blocking-enabled-in-firefox-23/), all resources must be accessed using secure (https) connection.
    
 
 HTML/SCRIPT
