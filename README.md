@@ -1,4 +1,4 @@
-﻿AGILE CRM WIDGETS
+﻿AGILE CRM HTML WIDGETS
 =================
 
 This API allows you to develop widgets for Agile CRM.   
@@ -45,7 +45,6 @@ These functions can be broadly categorized in the following three groups based o
       7. agile_crm_update_contact_properties(propertiesArray)
       8. agile_crm_delete_contact_property_by_subtype(propertyName, subtype, value)
 
----
 
 ####I. GLOBAL WIDGET PROPERTIES
 
@@ -121,7 +120,7 @@ These functions can be broadly categorized in the following three groups based o
 **Arguments:**  nil    
 **Response:**  JSON Object   
 
-   This function returns the object in the form of json object. More details about the structure of contact object is provided in URL section above.
+   This function returns the object in the form of json object. More details about the structure of contact object is provided at the bottom of this page.
 
         Eg. var jsonData = agile_crm_get_contact();
 
