@@ -121,7 +121,7 @@ These functions can be broadly categorized in the following three groups based o
 
 ####III. CONTACT PROPERTY   
 **a) agile_crm_get_contact()**   
-**Arguments:**  NIL    
+**Arguments:**  nil    
 **Response:**  JSON Object   
 
    This function returns the object in the form of json object. More details about the structure of contact object is provided in URL section above.
