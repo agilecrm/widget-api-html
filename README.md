@@ -3,21 +3,24 @@
 
 This API allows you to develop HTML widgets for AgileCRM.   
 
-Widgets are small application that can be built by end users and embedded in a contact’s page in AgileCRM. They are HTML/JavaScript segments that are executed whenever a contact page is loaded. Every contact page contains an HTML segment allocated for custom widget.
+Widgets are small applications that can be built by end users and embedded in a contacts/companies page in AgileCRM. They are HTML/JavaScript segments that are executed whenever a contact/company page is loaded. Every contacts/company page contains a HTML segment allocated for custom widget.
 
-Custom widgets have access to contact details and/or external resources in order to display meaningful data. These widgets add extra functionality to the AgileCRM contacts page.
+Custom widgets have access to contact/company details and/or external resources in order to display meaningful data. These widgets add extra functionality to the AgileCRM contact/companies page.
 
 *Custom* tab, located at `https://<your_domain>.agilecrm.com/#add-widget/` provides the option to add a custom widget. Upon clicking the dropdown, you see that there are two ways to upload a widget - HTML and URL. You have to select `HTML` option from drop down menu to use methods in this doc.
 
-HTML/JavaScript segment are embedded on the contact page. It is executed at the AgileCRM server whenever a contact page loads. It can access external resource in the form of jsonp object.    
-***Access:*** Global widget property, widget property wrt to contact, and contact details.
+HTML/JavaScript segment are embedded on the contact/company page. It is executed at the AgileCRM server whenever a contact/company page loads. It can access external resource in the form of jsonp object.    
 
 ####Notes:   
 1. AgileCRM supports HTML5 specifications. Please write a widget which is compatible with HTML5.  
  
-2. jQuery library (version 1.7.2) is already loaded and ready for use if needed. Do not import any other version jquery library with the widget as it can result into compatibility issues.   
+2. jQuery library (version 1.10.2) is already loaded and ready for use if needed. Do not import any other version jquery library with the widget as it can result into compatibility issues.   
 
-3. As modern browsers have started to block [mixed content](https://blog.mozilla.org/security/2013/05/16/mixed-content-blocking-in-firefox-aurora/), all resources must be accessed using secure (https) connection.
+3.  Bootstrap css & javascript library (version v3.0.0) is already loaded and ready for use if needed. Do not import any other version Bootstrap library with the widget as it can result into compatibility issues.
+
+4. As modern browsers have started to block [mixed content](https://blog.mozilla.org/security/2013/05/16/mixed-content-blocking-in-firefox-aurora/), all resources must be accessed using secure (https) connection.
+
+***Access:*** Global widget property, widget property wrt to contact, and contact details.
    
 Functions can be broadly categorized in the following three groups based on their domain.
 
@@ -45,7 +48,18 @@ Functions can be broadly categorized in the following three groups based on thei
       7. agile_crm_update_contact_properties(propertiesArray)
       8. agile_crm_delete_contact_property_by_subtype(propertyName, subtype, value)
 
-Looking at the functions in detail: 
+**IV. COMPANY PROPERTY:** These functions have access to and are used to modify the properties of the company on which the widget is loaded. 
+
+      1. agile_crm_get_company()
+      2. agile_crm_get_company_property(propertyName)
+      3. agile_crm_get_company_properties_list(propertyName)
+      4. agile_crm_get_company_property_by_subtype(propertyName, subtype)
+      5. agile_crm_save_company_property(propertyName, subtype, value, type)
+      6. agile_crm_update_company(propertyName, value)
+      7. agile_crm_update_company_properties(propertiesArray)
+      8. agile_crm_delete_company_property_by_subtype(propertyName, subtype, value)
+
+Looking at the functions in detail:
 
 ####I. GLOBAL WIDGET PROPERTIES
 
@@ -205,57 +219,276 @@ Looking at the functions in detail:
 Contact Structure
 ---
         {
-            "id": 1435,`
+            "id": 4521191813414912,
             "type": "PERSON",
-            "created_time": 1375424495,
-            "updated_time": 1380003638,
-            "viewed": {
-                "viewed_time": 1380003638330,
-                "viewer_id": 1
-            },
             "star_value": 0,
             "lead_score": 0,
-            "tags": [
-                "lead"
-            ],
-            "tagsWithTime": [
-                {
-                    "tag": "lead",
-                    "createdTime": 1378131285793,
-                    "entity_type": "tag"
-                }
-            ],
-            "properties": [
-                {
-                    "type": "SYSTEM",
-                    "name": "last_name",
-                    "subtype": null,
-                    "value": "test"
-                },
-                {
-                    "type": "SYSTEM",
-                    "name": "title",
-                    "subtype": null,
-                    "value": "Software Developer at Agile CRM"
-                },
-                {
-                    "type": "SYSTEM",
-                    "name": "email",
-                    "subtype": "",
-                    "value": "test@agilecrm.com"
-                },
-                {
-                    "type": "CUSTOM",
-                    "name": "image",
-                    "subtype": null,
-                    "value": "https://www.agilecrm.com/img/agile-crm.png"
-                }
-            ],
-            "widget_properties": null,
-            "owner": {
-                "id": 1450,
-                "email": "user@agilecrm.com",
-                "is_admin": false
-            }
+            "klout_score": "",
+            "tags": ["glod_plan"],
+            "tagsWithTime": [{
+                "tag": "glod_plan",
+                "createdTime": 1502259152466,
+                "availableCount": 0,
+                "entity_type": "tag"
+            }],
+            "properties": [{
+                "type": "CUSTOM",
+                "name": "Date of Birth",
+                "value": "599077800"
+            }, {
+                "type": "CUSTOM",
+                "name": "level",
+                "value": "Glod"
+            }, {
+                "type": "SYSTEM",
+                "name": "first_name",
+                "value": "Sid"
+            }, {
+                "type": "SYSTEM",
+                "name": "last_name",
+                "value": "Bravo"
+            }, {
+                "type": "SYSTEM",
+                "name": "company",
+                "value": "Agile CRM"
+            }, {
+                "type": "SYSTEM",
+                "name": "title",
+                "value": "Mr"
+            }, {
+                "type": "SYSTEM",
+                "name": "email",
+                "subtype": "",
+                "value": "sid.bravo@gmail.com"
+            }, {
+                "type": "SYSTEM",
+                "name": "email",
+                "subtype": "work",
+                "value": "bravo.sid@gmail.com"
+            }, {
+                "type": "SYSTEM",
+                "name": "email",
+                "subtype": "home",
+                "value": "sid.b@ymail.com"
+            }, {
+                "type": "SYSTEM",
+                "name": "phone",
+                "subtype": "home",
+                "value": "+19908164425"
+            }, {
+                "type": "SYSTEM",
+                "name": "phone",
+                "subtype": "work",
+                "value": "+18099128809"
+            }, {
+                "type": "SYSTEM",
+                "name": "phone",
+                "subtype": "mobile",
+                "value": "+18919198785"
+            }, {
+                "type": "SYSTEM",
+                "name": "phone",
+                "subtype": "",
+                "value": "+19030528764"
+            }, {
+                "type": "SYSTEM",
+                "name": "phone",
+                "subtype": "",
+                "value": "+19603784425"
+            }, {
+                "type": "SYSTEM",
+                "name": "website",
+                "subtype": "URL",
+                "value": "http://www.sidbravo.com"
+            }, {
+                "type": "SYSTEM",
+                "name": "website",
+                "subtype": "",
+                "value": "http://www.ymail.com"
+            }, {
+                "type": "SYSTEM",
+                "name": "website",
+                "subtype": "YOUTUBE",
+                "value": "http://www.youtube.com/knowbravo"
+            }, {
+                "type": "SYSTEM",
+                "name": "address",
+                "subtype": "work",
+                "value": "{\"zip\":\"415\",\"address\":\"1st block, cherry towers\",\"state\":\"Texas\",\"countryname\":\"United States\",\"country\":\"US\",\"city\":\"Dallas\"}"
+            }],
+            "contact_company_id": "4644337115725824"
         }
 
+
+####IV. COMPANY PROPERTY   
+####**a) agile_crm_get_company()**   
+**Parameters:**  nil    
+**Response:**  JSON Object
+
+   This function returns the object in the form of a JSON object. More details about the structure of company object is provided at the [bottom](#company-structure) of this page.
+
+            var jsonData = agile_crm_get_company();
+
+####**b) agile_crm_get_company_property(propertyName)**   
+**Parameters:**  propertyName    
+**Response:** String   
+
+   This function returns the property associated with `propertyName`, if present, otherwise returns `undefined`.
+
+              var propertyName = "name";
+              var propertyValue = agile_crm_get_company_property(propertyName);  // returns the first name of company.
+
+####**c) agile_crm_get_company_properties_list(propertyName)**   
+**Parameters:**  propertyName    
+**Response:** Array [JSON Object]    
+
+   This function fetches all the value associated with `propertyName` in a array. If there's no property present, it will return an empty array.
+
+              var propertyName = "email";
+              var propertyValue = agile_crm_get_company_properties_list(propertyName); // returns list of all emails associated to current company.
+
+####**d) agile_crm_get_company_property_by_subtype(propertyName, subtype)**   
+**Parameters:**  propertyName, subtype   
+**Response:**  String   
+
+
+   This will return the current company property with key `propertyName` and possess a subtype of (`subtype`). If there's no result, it will return `undefined` object.
+
+              var propertyName = "email";
+              var subtype = "primary";
+              var result = agile_crm_get_company_property_by_subtype(propertyName, subtype);
+         
+####**e) agile_crm_save_company_property(propertyName, subtype, value, type)**   
+**Parameters:**  propertyName, subtype, value, type    
+**Response:**  nil   
+
+   This function will save the property with all of its details.
+
+              var propertyName = "email";
+              var subtype = "primary";
+              var value = "foo@bar.com";
+              var type = "SYSTEM";  // because email is system defined property.
+              agile_crm_save_company_property(propertyName, subtype, value, type);
+
+####**f) agile_crm_update_company(propertyName, value)**   
+**Parameters:**  propertyName, value    
+**Response:**  nil   
+
+   This function is used to update current company property and assign it the value `value`.
+
+              var propertyName = "email";
+              var value = "foo@bar.com";
+              agile_crm_update_company(propertyName, value);
+
+####**g) agile_crm_update_company_properties(propertiesArray)**   
+**Parameters:**  propertiesArray    
+**Response:**  nil   
+
+   This function is used to update multiple properties with a single function call.
+
+              var pref = [
+                            {"name": "name", "value":"foo"},
+                            {"name": "email", "value":"foo@bar.com", "type":"SYSTEM", "subtype":"primary"}
+                         ];
+              agile_crm_update_company_properties(pref);
+
+####**h) agile_crm_delete_company_property_by_subtype(propertyName, subtype, value)**   
+**Parameters:**  propertyName, subtype, value    
+**Response:**  nil   
+
+   This function can be used to remove the property mentioned by the arguments.
+
+              var propertyName = "email";
+              var subtype = "primary";
+              var value = "foo@bar.com";
+              agile_crm_delete_company_property_by_subtype(propertyName, subtype, value);
+
+
+
+Company Structure
+---
+        {
+            "id": 4644337115725824,
+            "type": "COMPANY",
+            "star_value": 5,
+            "lead_score": 150,
+            "klout_score": "",
+            "tags": ["glod_plan"],
+            "tagsWithTime": [{
+                "tag": "glod_plan",
+                "createdTime": 1502262765637,
+                "availableCount": 0,
+                "entity_type": "tag"
+            }],
+            "properties": [{
+                "type": "CUSTOM",
+                "name": "Established Date",
+                "value": "1293301800"
+            }, {
+                "type": "CUSTOM",
+                "name": "Level",
+                "value": "High"
+            }, {
+                "type": "SYSTEM",
+                "name": "name",
+                "value": "Agile CRM"
+            }, {
+                "type": "SYSTEM",
+                "name": "url",
+                "value": "https://www.agilecrm.com"
+            }, {
+                "type": "SYSTEM",
+                "name": "email",
+                "subtype": "primary",
+                "value": "sales@agilecrm.com"
+            }, {
+                "type": "SYSTEM",
+                "name": "email",
+                "subtype": "alternate",
+                "value": "info@agilecrm.com"
+            }, {
+                "type": "SYSTEM",
+                "name": "email",
+                "subtype": "",
+                "value": "support@agilecrm.com"
+            }, {
+                "type": "SYSTEM",
+                "name": "phone",
+                "subtype": "primary",
+                "value": "+1-800-980-0729"
+            }, {
+                "type": "SYSTEM",
+                "name": "phone",
+                "subtype": "alternate",
+                "value": "+44 14428 00729"
+            }, {
+                "type": "SYSTEM",
+                "name": "phone",
+                "subtype": "other",
+                "value": "+61 285990729"
+            }, {
+                "type": "SYSTEM",
+                "name": "phone",
+                "subtype": "",
+                "value": "+91 9492227799"
+            }, {
+                "type": "SYSTEM",
+                "name": "website",
+                "subtype": "URL",
+                "value": "http://www.agilecrm.com"
+            }, {
+                "type": "SYSTEM",
+                "name": "website",
+                "subtype": "TWITTER",
+                "value": "agilecrm"
+            }, {
+                "type": "SYSTEM",
+                "name": "address",
+                "subtype": "work",
+                "value": "{\"zip\":\"73301\",\"address\":\"white blocks, 7th avenu\",\"state\":\"Texas\",\"countryname\":\"United States\",\"country\":\"US\",\"city\":\"Dallas\"}"
+            }, {
+                "type": "SYSTEM",
+                "name": "name_lower",
+                "value": "agile crm"
+            }]
+        }
