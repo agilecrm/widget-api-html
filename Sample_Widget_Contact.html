@@ -1,20 +1,32 @@
+/*
+    Goto URL: https://<your_domain>.agilecrm.com/#Custom-widget
+    Following are the steps to configure the sample "Contact widget"
+    Widget Name: Contact Widget
+    Description: Sample contact widget
+    Type: Contact (Select contact option from dropdown to load widgets in contact details page)
+    Widget Type: HTML (Select the HTML option from dropdown to load script while loading widget in contact details page)
+    Script: (Copy and paste the following html and script code)
+    Logo URL: https://www.agilecrm.com/img/agilecrmlogo.svg
+    Mini logo URL: https://cdnsite.agilecrm.com/landing/img/heart.svg
+*/
+
 <html>
   <body>
     <center>
       <div id="ContactDesciptionDiv" style="display:block;">
         <img id = "contactImg" alt = "loading..." height=150 width=150/>
-            <h2 id="contactName" style="margin:0; font-weight:bold"></h2>
-            <h3 id="jobDescription" style="margin:0; font-style:italic"> </h3>
-            <p  id="extraDetails"></p>
-            <p id="tags"> </p>
+        <h2 id="contactName" style="margin:0; font-weight:bold"></h2>
+        <h3 id="jobDescription" style="margin:0; font-style:italic"> </h3>
+        <p id="extraDetails"></p>
+        <p id="tags"> </p>
       </div>
-        <input type="submit" id="showHideButton" name="ShowHide" value="Show/Hide" onclick="showHideFlip()">
+      <input type="submit" id="showHideButton" name="ShowHide" value="Show/Hide" onclick="showHideFlip()"/>
     </center>
   </body>
 
   <script type="text/javascript">
 
-    var widgetName = "Contact Description";
+    var widgetName = "Contact Widget";
     var contactDetails;
     var widgetPrefs;
     var isShowing;
@@ -32,16 +44,19 @@
       */
       widgetPrefs = agile_crm_get_widget_prefs(widgetName);                                   
 
-      if(typeof(widgetPrefs) !="undefined")                                                    
-        widgetPrefs = JSON.parse(widgetPrefs);                                                
+      if(typeof(widgetPrefs) !="undefined"){                                                
+        widgetPrefs = JSON.parse(widgetPrefs);
+      }                                                
                                                                                               
-      if(typeof(widgetPrefs) == "undefined" || typeof(widgetPrefs["isShow"]) == "undefined")  
+      if(typeof(widgetPrefs) == "undefined" || typeof(widgetPrefs["isShow"]) == "undefined"){
         isShowing = "true";                                                                   
-      else                                                                                    
+      }else{                                                                                    
         isShowing = widgetPrefs["isShow"];                                                    
-        
-      if(typeof(callback) == "function") 
+      }
+
+      if(typeof(callback) == "function"){
         callback(showContactDetails);   // invoke getContactDetails(showContactDetails);
+      }
     }
 
     // Fetches contact details from AgileCRM.
@@ -75,10 +90,13 @@
         }
       }
 
-      if(typeof(contactDetails["image"])=="undefined"||contactDetails["image"]==null||contactDetails["image"]=="")
-        contactDetails["image"] = "https://i0.wp.com/da4o37ei6ybbh.cloudfront.net/css/images/pic.png";
-      if(typeof(callback) == "function")
+      if(typeof(contactDetails["image"])=="undefined"||contactDetails["image"]==null||contactDetails["image"]==""){
+        contactDetails["image"] = "https://www.agilecrm.com/icons/service.svg";
+      }
+
+      if(typeof(callback) == "function"){
         callback();   // invoke showContactDetails();
+      }
     }
 
     // Adding data to html container.
@@ -101,16 +119,17 @@
       var extraDetailsContainer = document.getElementById("extraDetails");
       var data = contactName + " is our <b>" + contactDetails.star_value + " star</b> customer.";
 
-      if(contactDetails.lead_score >= 80)
+      if(contactDetails.lead_score >= 80){
         data += " He is <b>actively involved</b> in our business. DON'T LET HIM GO.";
-      else if(contactDetails.lead_score >= 60)
+      }else if(contactDetails.lead_score >= 60){
         data += " He has <b>shown interest</b> in our business. He can be our potential customer. GO GRAB HIM.";
-      else if(contactDetails.lead_score >= 40)
+      }else if(contactDetails.lead_score >= 40){
         data += " There is a <b>mild chance</b> of business with him. You can spend your energy on other.";
-      else if(contactDetails.lead_score >= 20)
+      }else if(contactDetails.lead_score >= 20){
         data += " There is <b>very little chance</b> of business with him. You can spend your energy on other.";
-      else 
+      }else {
         data += " You <b> still have to explore business opportunities</b> with this person.";
+      }
 
       extraDetailsContainer.innerHTML = data;
 
@@ -125,11 +144,11 @@
         data += "</b>.";
         tags.innerHTML = data;
       }
+
       if(isShowing == "true") {
         showHideButton.value = "Hide";
         div.style.display="block";
-      }
-      else {
+      } else {
         showHideButton.value = "Show";
         div.style.display="none";
       }

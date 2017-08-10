@@ -37,7 +37,7 @@ Functions can be broadly categorized in the following three groups based on thei
       2. agile_crm_get_widget_property_from_contact(propertyName)
       3. agile_crm_delete_widget_property_from_contact(propertyName)
 
-**III. CONTACT PROPERTY:** These functions have access to and are used to modify the properties of the contact on which the widget is loaded. 
+**III. CONTACT PROPERTY:** These functions have access to contact object and are used to modify the properties of the contact on which the widget is loaded. 
 
       1. agile_crm_get_contact()
       2. agile_crm_get_contact_property(propertyName)
@@ -48,7 +48,7 @@ Functions can be broadly categorized in the following three groups based on thei
       7. agile_crm_update_contact_properties(propertiesArray)
       8. agile_crm_delete_contact_property_by_subtype(propertyName, subtype, value)
 
-**IV. COMPANY PROPERTY:** These functions have access to and are used to modify the properties of the company on which the widget is loaded. 
+**IV. COMPANY PROPERTY:** These functions have access to company object and are used to modify the properties of the company on which the widget is loaded. 
 
       1. agile_crm_get_company()
       2. agile_crm_get_company_property(propertyName)
@@ -63,7 +63,7 @@ Looking at the functions in detail:
 
 ####I. GLOBAL WIDGET PROPERTIES
 
-*`widgetName` represents the name of widget which is mentioned while adding widget on the ***Add Widget*** (`https://<your_domain>.agilecrm.com/#add-widget`) page.
+*`widgetName` represents the name of widget which is mentioned while adding widget on the ***Custom Widget*** (`https://<your_domain>.agilecrm.com/#Custom-widget`) page.
 
 ####**a) agile_crm_get_widget(widgetName)**   
 **Parameters:**  widgetName   
