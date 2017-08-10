@@ -1,5 +1,17 @@
-<!DOCTYPE HTML>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"> </script>
+/*
+    To run this weather widget you have to register in https://developer.worldweatheronline.com/ and genetrate API key. 
+    Add API key to 'WeatherWidgetAPIKey' variable in javascript code.
+
+    Goto URL: https://<your_domain>.agilecrm.com/#Custom-widget
+    Following are the steps to configure the sample "Weather Widget"
+    Widget Name: Weather Widget
+    Description: Sample Weather Widget
+    Type: Contact (Select contact option from dropdown to load widgets in contact details page)
+    Widget Type: HTML (Select the HTML option from dropdown to load script while loading widget in contact details page)
+    Script: (Copy and paste the following html and script code)
+    Logo URL: https://www.agilecrm.com/img/agilecrmlogo.svg
+    Mini logo URL: https://cdnsite.agilecrm.com/landing/img/heart.svg
+*/
 
 <html>
   <body>
@@ -12,24 +24,24 @@
       <div id="extraWeatherDetails" style="display:block;">
         <table border="0">
           <tr>
-            <td id="00">  </td>
-            <td id="01">  </td>
+            <td id="00"></td>
+            <td id="01"></td>
           </tr>
           <tr>
-            <td id="10">  </td>
-            <td id="11">  </td>
+            <td id="10"></td>
+            <td id="11"></td>
           </tr>
           <tr>
-            <td id="20">  </td>
-            <td id="21">  </td>
+            <td id="20"></td>
+            <td id="21"></td>
           </tr>
           <tr>
-            <td id="30">  </td>
-            <td id="31">  </td>
+            <td id="30"></td>
+            <td id="31"></td>
           </tr>
           <tr>
-            <td id="40">  </td>
-            <td id="41">  </td>
+            <td id="40"></td>
+            <td id="41"></td>
           </tr>
         </table>
       </div>
@@ -43,6 +55,7 @@
     var widgetName = "Weather Widget";
     var widgetPrefs;
     var isShowing;
+    var WeatherWidgetAPIKey = "---Insert API KEY---";
 
    /*
        agile_crm_get_contact_property:
@@ -55,13 +68,11 @@
       contact = JSON.parse(contact);
       if(typeof(contact.zip) == "undefined") {
         fail();
-      }
-      else {
+      }else {
         $("#details").html("zip: " + contact.zip);
         step1_getLatLong(contact.zip);
       }
-    }
-    else {
+    }else {
       fail();
     }
 
@@ -72,69 +83,64 @@
           url: url,
           type: 'GET',
           dataType: 'json',
-          success: success,
-          error: failure,
+          success: function(data) {
+              if(data["status"] == 'OK') {
+                var lat = data.results[0].geometry.location.lat;
+                var lng = data.results[0].geometry.location.lng;
+                step2_getWeather(lat, lng);
+              }else{
+                console.log("Can't find location for the zip code.")
+              }
+          },
+          error: function() {
+            console.log("Failed to fetch location data from maps.googleapis.com.");
+          }
       });
-      function success(data) {
-          if(data["status"] == 'OK') {
-            var lat = data.results[0].geometry.location.lat;
-            var lng = data.results[0].geometry.location.lng;
-            step2_getWeather(lat, lng);
-          }
-          else{
-            console.log("Can't find location for the zip code.")
-          }
-      }
-      function failure() {
-        console.log("Failed to fetch location data from maps.googleapis.com.");
-      }
     }
 
     // This function fetches weather details from the latitude/longitude and adds these to html page.
     function step2_getWeather(lat, lng) {
-      var url = "https://api.worldweatheronline.com/free/v1/weather.ashx?q=" + lat + "," + lng 
-                  + "&format=json&key=4jp2uyrce27sh59nbjjr975s&callback=?";
+      var url = "https://api.worldweatheronline.com/premium/v1/weather.ashx?q=" + lat + "," + lng 
+                  + "&format=json&key="+WeatherWidgetAPIKey+"&callback=?";
 
       $.ajax({
           url: url,
           type: 'GET',
           dataType: 'json',
-          success: success,
-          error: failure,
+          success: function(data) {
+            var desc = data.data.current_condition[0].weatherDesc[0].value;
+            var iconUrl = data.data.current_condition[0].weatherIconUrl[0].value;
+            var temp = data.data.current_condition[0].temp_C;
+
+            $("#weatherOverview").html(desc);
+            $("#weatherDetails").html(temp + " C");
+            $("#weatherImg").attr("src", iconUrl);
+
+            var cloudCover = data.data.current_condition[0].cloudcover;
+            var visibility = data.data.current_condition[0].visibility;
+            var windSpeed = data.data.current_condition[0].windspeedMiles;
+            var windDirection = data.data.current_condition[0].winddir16Point;
+            var tempMinC = data.data.weather[0].mintempC;
+            var tempMaxC = data.data.weather[0].maxtempC;
+
+            $("#00").html("<strong>Cloud Cover:</strong>");
+            $("#10").html("<strong>Temperature:</strong>");
+            $("#20").html("<strong>Wind Speed:</strong>");
+            $("#30").html("<strong>Wind Direction:</strong>");
+            $("#40").html("<strong>Visibility:</strong>");
+
+            $("#01").html(cloudCover + "%");
+            $("#11").html(tempMinC + "-" + tempMaxC + " <i>C</i>");
+            $("#21").html(windSpeed + " <i>mph</i>");
+            $("#31").html(windDirection + "");
+            $("#41").html(visibility + "%");
+
+            step3_getWidgetPrefs();
+          },
+          error:  function(data) {
+            console.log("FAIL!!!\n" +data);
+          }
       });
-      function success(data) {
-        var desc = data.data.current_condition[0].weatherDesc[0].value;
-        var iconUrl = data.data.current_condition[0].weatherIconUrl[0].value;
-        var temp = data.data.current_condition[0].temp_C;
-
-        $("#weatherOverview").html(desc);
-        $("#weatherDetails").html(temp + " C");
-        $("#weatherImg").attr("src", iconUrl);
-
-        var cloudCover = data.data.current_condition[0].cloudcover;
-        var visibility = data.data.current_condition[0].visibility;
-        var windSpeed = data.data.current_condition[0].windspeedMiles;
-        var windDirection = data.data.current_condition[0].winddir16Point;
-        var tempMinC = data.data.weather[0].tempMinC;
-        var tempMaxC = data.data.weather[0].tempMaxC;
-
-        $("#00").html("<strong>Cloud Cover:</strong>");
-        $("#10").html("<strong>Today Temperature:</strong>");
-        $("#20").html("<strong>Wind Speed:</strong>");
-        $("#30").html("<strong>Wind Direction:</strong>");
-        $("#40").html("<strong>Visibility:</strong>");
-
-        $("#01").html(cloudCover + "%");
-        $("#11").html(tempMinC + "-" + tempMaxC + " <i>C</i>");
-        $("#21").html(windSpeed + " <i>mph</i>");
-        $("#31").html(windDirection + "");
-        $("#41").html(visibility + "%");
-
-        step3_getWidgetPrefs();
-      }
-      function failure(data) {
-        console.log("FAIL!!!\n" +data);
-      }
     }
 
     // This method fetches the global widget preference and decides weather to show extra details or not.
@@ -148,19 +154,20 @@
       */
       widgetPrefs = agile_crm_get_widget_prefs(widgetName);                                   
 
-      if(typeof(widgetPrefs) !="undefined")
+      if(typeof(widgetPrefs) !="undefined"){
         widgetPrefs = JSON.parse(widgetPrefs);
+      }
 
-      if(typeof(widgetPrefs) == "undefined" || typeof(widgetPrefs["isShow"]) == "undefined")  
+      if(typeof(widgetPrefs) == "undefined" || typeof(widgetPrefs["isShow"]) == "undefined"){
         isShowing = "true";
-      else
+      }else{
         isShowing = widgetPrefs["isShow"];
+      }
 
       if(isShowing == "true") {
         $("#weatherShowHideButton").prop('value', "Hide");
         $('#extraWeatherDetails').css('display','block');
-      }
-      else {
+      }else {
         $("#weatherShowHideButton").prop('value', "Show");
         $('#extraWeatherDetails').css('display','none');
       }
@@ -172,15 +179,15 @@
         isShowing = "false";
         $("#weatherShowHideButton").prop('value', "Show");
         $('#extraWeatherDetails').css('display','none');
-      }
-      else {
+      }else {
         isShowing = "true";
         $("#weatherShowHideButton").prop('value', "Hide");
         $('#extraWeatherDetails').css('display','block');
       }
 
-      if(typeof (widgetPrefs) == "undefined")
+      if(typeof (widgetPrefs) == "undefined"){
         widgetPrefs = new Object();
+      }
 
       widgetPrefs.isShow = isShowing;
 
@@ -199,6 +206,5 @@
       $("#weatherDetails").html("No zip code found");
       $('#weatherButtonBlock').css('display','none');
     }
-
   </script>
 </html>
