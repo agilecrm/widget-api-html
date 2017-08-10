@@ -1,0 +1,188 @@
+/*
+    Goto URL: https://<your_domain>.agilecrm.com/#Custom-widget
+    Following are the steps to configure the sample "Company widget"
+    Widget Name: Company Widget
+    Description: Sample company widget
+    Type: Company (Select company option from dropdown to load widgets in company details page)
+    Widget Type: HTML (Select the HTML option from dropdown to load script while loading widget in company details page)
+    Script: (Copy and paste the following html and script code)
+    Logo URL: https://www.agilecrm.com/img/agilecrmlogo.svg
+    Mini logo URL: https://cdnsite.agilecrm.com/landing/img/heart.svg
+*/
+
+<html>
+  <body>
+    <center>
+      <div id="CompanyDesciptionDiv" style="display:block;">
+        <img id = "companyImg" alt = "loading..." height=150 width=150/>
+        <h2 id="companyName" style="margin:0; font-weight:bold"></h2>
+        <h3 id="jobDescription" style="margin:0; font-style:italic"> </h3>
+        <p id="extraDetails"></p>
+        <p id="tags"> </p>
+      </div>
+      <input type="submit" id="showHideButton" name="ShowHide" value="Show/Hide" onclick="showHideFlip()"/>
+    </center>
+  </body>
+
+  <script type="text/javascript">
+
+    var widgetName = "Company Widget";
+    var companyDetails;
+    var widgetPrefs;
+    var isShowing;
+    var showHideButton = document.getElementById("showHideButton");
+    var div = document.getElementById("CompanyDesciptionDiv");
+
+    // Fetches the global widget preference.
+    function getWidgetPrefs(callback) {
+
+      /*
+        agile_crm_get_widget_prefs:
+            This function is used to get the global widget preference.
+            If there's some preference present then it returns its 
+            stringified json representation otherwise undefined object. 
+      */
+      widgetPrefs = agile_crm_get_widget_prefs(widgetName);                                   
+
+      if(typeof(widgetPrefs) !="undefined"){                                                
+        widgetPrefs = JSON.parse(widgetPrefs);
+      }                                                
+                                                                                              
+      if(typeof(widgetPrefs) == "undefined" || typeof(widgetPrefs["isShow"]) == "undefined"){
+        isShowing = "true";                                                                   
+      }else{                                                                                    
+        isShowing = widgetPrefs["isShow"];                                                    
+      }
+
+      if(typeof(callback) == "function"){
+        callback(showCompanyDetails);   // invoke getCompanyDetails(showCompanyDetails);
+      }
+    }
+
+    // Fetches company details from AgileCRM.
+    function getCompanyDetails(callback) {
+      companyDetails = new Object();
+
+      /*
+         agile_crm_get_company_property:
+            This function returns the property associated with propertyName,
+            if it exists, otherwise returns undefined.
+      */
+      companyDetails.firstName = agile_crm_get_company_property("first_name");
+      companyDetails.lastName = agile_crm_get_company_property("last_name");
+      companyDetails.title = agile_crm_get_company_property("title");
+      companyDetails.image = agile_crm_get_company_property("image");
+
+      /*
+         agile_crm_get_company:
+            This function returns the object in the form of json object.
+            More details about the structure of company object is
+            provided in documentation.
+      */
+      var company = agile_crm_get_company();
+      companyDetails.lead_score = company["lead_score"];
+      companyDetails.star_value = company["star_value"];
+      companyDetails.tags = company["tags"];
+
+      for(var key in companyDetails) {
+        if(typeof (companyDetails[key]) == "undefined") {
+          companyDetails[key] = "";
+        }
+      }
+
+      if(typeof(companyDetails["image"])=="undefined"||companyDetails["image"]==null||companyDetails["image"]==""){
+        companyDetails["image"] = "http://doxhze3l6s7v9.cloudfront.net/beta/static/img/company-default-img.png";
+      }
+
+      if(typeof(callback) == "function"){
+        callback();   // invoke showCompanyDetails();
+      }
+    }
+
+    // Adding data to html container.
+    function showCompanyDetails() {
+      showHideButton = document.getElementById("showHideButton");
+      div = document.getElementById("CompanyDesciptionDiv");
+
+      var img = document.getElementById("companyImg"); 
+      img.src = companyDetails.image;
+      img.alt = "no_image";
+      img.align = "center";
+
+      var companyNameContainer = document.getElementById("companyName");
+      var companyName = companyDetails.firstName + " " + companyDetails.lastName;
+      companyNameContainer.innerHTML= companyName;
+
+      var jobContainer = document.getElementById("jobDescription");
+      jobContainer.innerHTML = companyDetails.title;
+
+      var extraDetailsContainer = document.getElementById("extraDetails");
+      var data = companyName + " is our <b>" + companyDetails.star_value + " star</b> customer and";
+
+      if(companyDetails.lead_score >= 80){
+        data += " It is <b>actively involved</b> in our business. DON'T LET IT GO.";
+      }else if(companyDetails.lead_score >= 60){
+        data += " It has <b>shown interest</b> in our business. IT can be our potential customer. GO GRAB IT.";
+      }else if(companyDetails.lead_score >= 40){
+        data += " There is a <b>mild chance</b> of business with it. You can spend your energy on other.";
+      }else if(companyDetails.lead_score >= 20){
+        data += " There is <b>very little chance</b> of business with it. You can spend your energy on other.";
+      }else {
+        data += " You <b> still have to explore business opportunities</b> with this company.";
+      }
+
+      extraDetailsContainer.innerHTML = data;
+
+      if(companyDetails.tags.length > 0) {
+        var tags = document.getElementById("tags");
+        data = "It is tagged with <b>";
+        for(var i = 0; i < companyDetails.tags.length; i++) {
+          if(i > 0)
+            data += ", ";
+          data += companyDetails.tags[i];
+        }
+        data += "</b>.";
+        tags.innerHTML = data;
+      }
+
+      if(isShowing == "true") {
+        showHideButton.value = "Hide";
+        div.style.display="block";
+      } else {
+        showHideButton.value = "Show";
+        div.style.display="none";
+      }
+    }
+
+    function showHideFlip() {
+      if(isShowing == "true") {
+        isShowing = "false";
+        showHideButton.value = "Show";
+        div.style.display="none";
+      }
+      else {
+        isShowing = "true";
+        showHideButton.value = "Hide";
+        div.style.display="block";
+      }
+
+      if(typeof (widgetPrefs) == "undefined")
+        widgetPrefs = new Object();
+
+      widgetPrefs.isShow = isShowing;
+
+      /*
+        agile_crm_save_widget_prefs:
+            This function can be used to save global widget preference.
+            'pref' should be a stringified json object. In case, if the
+            preference already exists it will overwrite it.
+      */
+      agile_crm_save_widget_prefs(widgetName, JSON.stringify(widgetPrefs)); 
+    }
+
+    // callbacks: getWidgetPrefs -> getCompanyDetails -> showCompanyDetails
+    getWidgetPrefs(getCompanyDetails);
+
+  </script>
+
+</html>
